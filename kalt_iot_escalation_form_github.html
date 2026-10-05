@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kalt Yükseltme Formu / KALT Escalation Form</title>
+<style>
+  :root {
+    --blue: #001E4B;
+    --electric-blue: #001EE6;
+    --red: #FA1400;
+    --cream: #FFFCF2;
+    --web-cream: #FAF5EA;
+    --dust: #9BACC3;
+    --light-dust: #D2DAE4;
+    --dark-dust: #717D8F;
+    --darkest-dust: #49515C;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+    background: var(--web-cream);
+    color: var(--darkest-dust);
+    margin: 0;
+    padding: 32px 16px 60px;
+  }
+  .wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    background: var(--cream);
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,30,75,0.08);
+  }
+  .header {
+    background: var(--blue);
+    padding: 28px 32px 26px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+  .header svg { height: 30px; width: auto; flex-shrink: 0; }
+  .header-text h1 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--cream);
+    margin: 0 0 2px;
+    letter-spacing: 0.01em;
+  }
+  .header-text .en {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--dust);
+    margin: 0;
+  }
+  .body-pad { padding: 28px 32px 32px; }
+  .subtitle {
+    font-size: 13px;
+    color: var(--dark-dust);
+    margin: 0 0 22px;
+    line-height: 1.5;
+  }
+  .note {
+    background: #fff;
+    border-left: 4px solid var(--red);
+    padding: 12px 16px;
+    font-size: 13px;
+    line-height: 1.55;
+    margin-bottom: 26px;
+    border-radius: 0 10px 10px 0;
+    color: var(--darkest-dust);
+  }
+  .note em { color: var(--dark-dust); font-style: normal; display: block; margin-top: 4px; }
+  .section-title {
+    background: var(--blue);
+    color: var(--cream);
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 10px 16px;
+    border-radius: 10px 10px 0 0;
+    margin: 22px 0 0;
+  }
+  .section-body {
+    border: 1px solid var(--light-dust);
+    border-top: none;
+    border-radius: 0 0 10px 10px;
+    padding: 16px 16px 6px;
+    margin-bottom: 4px;
+    background: #fff;
+  }
+  .grid2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  @media (max-width: 520px) {
+    .grid2 { grid-template-columns: 1fr; }
+    .header { padding: 22px 20px; }
+    .body-pad { padding: 22px 20px 28px; }
+  }
+  label {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--dark-dust);
+    margin: 12px 0 5px;
+    line-height: 1.4;
+  }
+  input[type="text"], select, textarea {
+    width: 100%;
+    font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    padding: 9px 12px;
+    border: 1px solid var(--light-dust);
+    border-radius: 8px;
+    color: var(--blue);
+    background: #fff;
+  }
+  input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--blue);
+    box-shadow: 0 0 0 2px rgba(0,30,75,0.08);
+  }
+  textarea { min-height: 60px; resize: vertical; }
+  .actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 26px;
+    align-items: center;
+  }
+  button {
+    font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 11px 18px;
+    border-radius: 24px;
+    border: 1px solid var(--blue);
+    background: var(--blue);
+    color: var(--cream);
+    cursor: pointer;
+    letter-spacing: 0.01em;
+  }
+  button.secondary {
+    background: #fff;
+    color: var(--blue);
+  }
+  button:active { transform: scale(0.98); }
+  #status {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--dark-dust);
+  }
+  footer {
+    text-align: center;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--dark-dust);
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    margin-top: 32px;
+  }
+  .setup-note { border: 1px solid var(--light-dust); border-radius: 10px; padding: 14px 16px; background: #fff; color: var(--blue); font-size: 13px; line-height: 1.55; margin-bottom: 20px; }
+  .setup-note p { margin: 6px 0 0; }
+  button:disabled { opacity: .55; cursor: not-allowed; }
+  button:focus-visible { outline: 3px solid var(--electric-blue); outline-offset: 3px; }
+  .status-message { margin: 14px 0 0; line-height: 1.5; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <svg role="img" aria-label="BISSELL" viewBox="0 0 706 492" xmlns="http://www.w3.org/2000/svg">
+      <path d="M125.436 277.48C129.273 272.741 131.383 266.777 131.383 260.669C131.383 253.657 128.689 247.034 123.801 242.019C118.921 237.014 112.393 234.155 105.413 233.973L0.00268555 233.954V327.986H0.147159L110.4 327.98C125.54 327.98 137.861 315.645 137.861 300.484C137.861 291.176 133.219 282.59 125.436 277.48ZM99.0994 272.977L19.9933 272.985V248.355L99.0994 248.36C105.876 248.36 111.39 253.882 111.39 260.669C111.39 267.455 105.876 272.977 99.0994 272.977ZM19.9933 287.383H104.838C112.048 287.385 117.918 293.261 117.918 300.484C117.918 307.707 112.048 313.582 104.838 313.582L19.9933 313.588V287.383Z" fill="#FFFCF2"/>
+      <path d="M485.205 260.666C485.205 268.162 488.375 275.348 493.908 280.403C488.375 285.59 485.205 292.899 485.205 300.481C485.205 315.621 497.493 327.945 512.606 327.978L604.993 327.983V313.585H536.907L536.912 313.58H518.227C511.014 313.58 505.147 307.704 505.147 300.481C505.147 293.258 511.014 287.38 518.227 287.38H597.47V272.982H535.548V272.977H517.489C510.712 272.977 505.195 267.452 505.195 260.666C505.195 253.879 510.712 248.355 517.489 248.355H604.993V233.952H511.881C497.172 233.952 485.205 245.936 485.205 260.666Z" fill="#FFFCF2"/>
+      <path d="M297.748 272.987L218.679 272.979C211.899 272.979 206.385 267.458 206.385 260.671C206.385 253.885 211.899 248.36 218.679 248.36H289.178C295.958 248.36 301.472 253.882 301.472 260.671V264.009H321.462V260.671C321.462 253.66 318.771 247.037 313.883 242.021C309.051 237.065 302.601 234.214 295.706 233.981L295.714 233.957H213.069C198.359 233.957 186.395 245.941 186.395 260.671C186.395 275.401 198.359 287.383 213.066 287.383H292.038C299.251 287.385 305.118 293.263 305.118 300.487C305.118 307.71 299.251 313.585 292.038 313.585H218.607C211.394 313.585 205.527 307.707 205.527 300.487L205.521 297.146H185.584V300.487C185.584 315.643 197.899 327.978 213.034 327.98H297.6C312.743 327.98 325.061 315.648 325.061 300.487C325.061 285.325 312.821 273.068 297.748 272.987Z" fill="#FFFCF2"/>
+      <path d="M447.412 272.99L368.135 272.979C361.358 272.979 355.844 267.458 355.844 260.671C355.844 253.885 361.358 248.36 368.135 248.36H438.637C445.416 248.36 450.93 253.882 450.93 260.671V264.009H470.921V260.671C470.921 253.66 468.227 247.037 463.339 242.021C458.51 237.068 452.067 234.22 445.175 233.981L445.186 233.957H362.527C347.818 233.957 335.851 245.941 335.851 260.671C335.851 275.401 347.818 287.383 362.524 287.383H441.497C448.71 287.383 454.577 293.263 454.577 300.487C454.577 307.71 448.71 313.585 441.497 313.585H368.065C360.852 313.585 354.985 307.707 354.985 300.487V297.146H335.043V300.487C335.043 315.643 347.358 327.978 362.492 327.983H447.059C462.202 327.983 474.519 315.648 474.519 300.487C474.519 285.44 462.389 273.178 447.409 272.99" fill="#FFFCF2"/>
+      <path d="M170.894 201.542H152.243V223.326H170.894V201.542Z" fill="#FFFCF2"/>
+      <path d="M693.926 209.901C695.673 209.901 696.714 210.139 696.714 211.666C696.66 212.749 695.962 213.175 694.573 213.201H690.796L690.82 209.901H693.926ZM690.82 215.634H692.963L695.906 220.971L699.384 220.955L696.203 215.321C698.45 215.125 699.766 214.155 699.766 211.613C699.766 208.588 698.049 207.554 695.272 207.463L687.692 207.484V220.987L690.796 220.971L690.82 215.634ZM693.402 204.719C699.028 204.719 702.87 208.422 702.891 213.995C702.891 219.632 699.028 223.602 693.458 223.602C687.842 223.618 684.142 219.765 684.131 214.179C684.11 208.583 687.786 204.735 693.402 204.719ZM693.479 201.689C684.64 201.705 680.966 208.4 680.966 214.179C681.009 220.106 684.736 226.627 693.498 226.627C700.994 226.619 706.008 220.987 706 214.145C705.973 207.661 701.663 201.67 693.479 201.689Z" fill="#FFFCF2"/>
+      <path d="M491.591 197.429C462.429 146.798 398.054 35.3358 389.107 22.4569C378.055 6.54792 365.034 0.0428733 350.343 0.00268555C335.655 0.0428733 322.634 6.54792 311.582 22.4569C302.636 35.3358 238.306 146.798 209.163 197.429H491.591Z" fill="#FA1400"/>
+      <path d="M620.278 423.421C617.399 417.286 603.773 392.967 586.87 363.246H113.814C96.9162 392.94 83.2984 417.229 80.4197 423.362C72.1875 440.903 73.073 455.448 80.3822 468.206C87.761 480.924 99.8966 488.965 119.181 490.596C139.46 492.311 350.37 491.962 350.37 491.962L350.365 491.957C350.365 491.957 561.237 492.367 581.516 490.655C600.801 489.023 612.936 480.983 620.315 468.265C627.624 455.504 628.51 440.962 620.278 423.421Z" fill="#FA1400"/>
+      <path d="M170.894 233.957H152.243V327.988H170.894V233.957Z" fill="#FFFCF2"/>
+      <path d="M636.643 201.544H618.803V327.988H636.643V201.544Z" fill="#FFFCF2"/>
+      <path d="M670.717 201.544H652.877V327.988H670.717V201.544Z" fill="#FFFCF2"/>
+    </svg>
+    <div class="header-text">
+      <h1>KALT IoT Yükseltme Formu</h1>
+      <p class="en">KALT IoT Escalation Form</p>
+    </div>
+  </div>
+
+  <main class="body-pad">
+  <div class="setup-note" role="note">
+    <strong>Test sürümü / Test version</strong>
+    <p>Gönderim henüz etkin değil. Lütfen yalnızca örnek test bilgileri kullanın.<br><span lang="en">Email submission is not enabled yet. Please use sample test information only.</span></p>
+  </div>
+  <form id="escalation-form" autocomplete="off">
+
+  <p class="subtitle">Bağlantılı robot desteği &mdash; BITCo Tüketici Hizmetleri'ne yükseltme / Connected robot support &mdash; escalation to BITCo Consumer Care</p>
+
+  <div class="note">
+    Göndermeden önce aşağıdaki tüm alanları doldurun. Bir bilgi edinilemiyorsa, alanı boş bırakmak yerine &ldquo;bilinmiyor &ndash; [sebep]&rdquo; yazın.
+    <em>Please fill in every field below before sending. If a piece of information is unavailable, write &ldquo;unknown &ndash; [reason]&rdquo; rather than leaving the field blank.</em>
+  </div>
+
+  
+
+  <div class="section-title">1. Vaka Bilgileri / Case Information</div><div class="section-body"><label for="f-case">KALT Vaka Referans Numarası / KALT Case Reference</label><input type="text" id="f-case" name="caseReference" required maxlength="4000"></div><div class="section-title">2. Cihaz Bilgileri / Device Details</div>
+  <div class="section-body">
+    <div class="grid2">
+      <div>
+        <label for="f-serial">Seri numarası / Serial number</label>
+        <input type="text" id="f-serial" name="serialNumber" required maxlength="4000">
+      </div>
+      <div>
+        <label for="f-mac">MAC adresi (tam, son 4 hane değil) / MAC address (full, not last 4 digits)</label>
+        <input type="text" id="f-mac" name="macAddress" required maxlength="4000">
+      </div>
+      <div>
+        <label for="f-sku">Model / SKU</label>
+        <input type="text" id="f-sku" name="sku" required maxlength="4000">
+      </div>
+      <div>
+        <label for="f-mfgdate">Üretim tarihi (biliniyorsa) / Manufactured date (if known)</label>
+        <input type="text" id="f-mfgdate" name="manufacturedDate" required maxlength="4000">
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">3. Ağ ve Cihaz Ortamı / Network &amp; Device Environment</div>
+  <div class="section-body">
+    <div class="grid2">
+      <div>
+        <label for="f-isp">İnternet servis sağlayıcısı (ISP) / Internet service provider (ISP)</label>
+        <input type="text" id="f-isp" name="isp" required maxlength="4000">
+      </div>
+      <div>
+        <label for="f-router">Router modeli / Router model</label>
+        <input type="text" id="f-router" name="routerModel" required maxlength="4000">
+      </div>
+      <div>
+        <label for="f-phone">Telefon modeli / Phone model</label>
+        <input type="text" id="f-phone" name="phoneModel" required maxlength="4000">
+      </div>
+      <div>
+        <label for="f-os">Telefon işletim sistemi sürümü / Phone OS version</label>
+        <input type="text" id="f-os" name="phoneOs" required maxlength="4000">
+      </div>
+      <div>
+        <label for="f-appver">Uygulama sürümü / App version</label>
+        <input type="text" id="f-appver" name="appVersion" required maxlength="4000">
+      </div>
+      <div>
+        <label for="f-band">Wi-Fi bandı doğrulandı mı? / Wi-Fi band confirmed?</label>
+        <select id="f-band" name="wifiBand" required>
+          <option value="">Seçiniz / Select</option>
+          <option value="2.4GHz confirmed">2.4GHz doğrulandı / 2.4GHz confirmed</option>
+          <option value="5GHz only (needs switching)">Sadece 5GHz (değiştirilmesi gerekiyor) / 5GHz only (needs switching)</option>
+          <option value="Unknown">Bilinmiyor / Unknown</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">4. Sorun Detayları / Issue Details</div>
+  <div class="section-body">
+    <label for="f-error">Görülen tam hata mesajı(ları) / Exact error message(s) seen</label>
+    <input type="text" id="f-error" name="errorMessage" required maxlength="4000">
+    <label for="f-steps">Tamamlanan standart sorun giderme adımları / Standard troubleshooting steps completed</label>
+    <textarea id="f-steps" name="troubleshootingSteps" required maxlength="4000"></textarea>
+    <label for="f-portal">IoT Portal bulguları (Kalt'ın portal erişimi varsa) / IoT Portal findings (if KALT has portal access)</label>
+    <textarea id="f-portal" name="portalFindings" required maxlength="4000"></textarea>
+    <label for="f-reason">Yükseltme gerekçesi / Reason for escalation</label>
+    <textarea id="f-reason" name="escalationReason" required maxlength="4000"></textarea>
+  </div>
+
+  
+
+  <div class="actions">
+    <button type="submit" id="btn-submit" disabled aria-describedby="status">Gönder / Submit</button>
+    <button type="reset" id="btn-clear" class="secondary">Temizle / Clear</button>
+  </div>
+  <p id="status" class="status-message" role="status" aria-live="polite">Gönderim kurulumu bekleniyor / Submission setup pending.</p>
+  </form>
+  <noscript><p lang="en">JavaScript is required for form submission.</p></noscript>
+  </main>
+</div>
+<footer>BISSELL &middot; KALT IoT</footer>
+<script>
+'use strict';
+// Initial GitHub Pages upload. Authenticated delivery will be enabled after
+// the published URL and Microsoft Entra application have been configured.
+// Keep OAuth client secrets, passwords and signed callback URLs out of this file.
+const form = document.getElementById('escalation-form');
+const status = document.getElementById('status');
+form.addEventListener('submit', (event) => {
+  event.preventDefault();
+  status.textContent = 'Gönderim henüz etkin değil / Submission is not enabled yet. No information has been sent.';
+});
+form.addEventListener('reset', () => {
+  status.textContent = 'Alanlar temizlendi / Fields cleared. Submission setup pending.';
+});
+</script>
+</body>
+</html>
